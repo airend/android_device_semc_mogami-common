@@ -32,8 +32,7 @@ PRODUCT_PACKAGES += \
     camera.semc
 
 # WiFi config & related files
-$(call inherit-product, hardware/ti/wlan/mac80211/wl12xx-wlan-modules.mk)
-$(call inherit-product, hardware/ti/wlan/mac80211/wl127x-wlan-products.mk)
+$(call inherit-product, hardware/ti/wlan/mac80211/wl18xx-wlan-modules.mk)
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/bin/wifi-cal.sh:system/bin/wifi-cal.sh \
@@ -45,6 +44,8 @@ PRODUCT_PACKAGES += \
     hostapd.conf \
     wpa_supplicant \
     wpa_supplicant.conf \
+    $(addsuffix .bin, wl1271-nvs_128x \
+    $(addprefix wl128x-fw-5-,sr mr plt)) \
     calibrator
 
 # BT
