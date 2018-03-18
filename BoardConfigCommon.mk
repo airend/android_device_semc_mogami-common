@@ -38,27 +38,6 @@ endif
 # Required for newer wpa_supplicant_8_ti versions to fix tethering
 BOARD_WIFI_SKIP_CAPABILITIES := true
 
-TARGET_MODULES_SOURCE := hardware/ti/wlan/mac80211/compat_wl12xx
-TARGET_MODULES_SOURCE_DIR := compat_wl12xx
-
-WLAN_MODULES:
-	rm -rf $(KERNEL_OUT)/modules
-	mkdir $(KERNEL_OUT)/modules
-	cp -rf $(TARGET_MODULES_SOURCE) $(KERNEL_OUT)/modules
-	$(MAKE) -C $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR) O=$(KERNEL_OUT)/COMPAT KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=$(TARGET_ARCH) $(KERNEL_CROSS_COMPILE)
-	mv $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR)/compat/compat.ko $(KERNEL_MODULES_OUT)
-	mv $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR)/net/mac80211/mac80211.ko $(KERNEL_MODULES_OUT)
-	mv $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR)/net/wireless/cfg80211.ko $(KERNEL_MODULES_OUT)
-	mv $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR)/drivers/net/wireless/wl12xx/wl12xx.ko $(KERNEL_MODULES_OUT)
-	mv $(KERNEL_OUT)/modules/$(TARGET_MODULES_SOURCE_DIR)/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
-	$(KERNEL_TOOLCHAIN_PATH)strip --strip-debug --strip-unneeded $(KERNEL_MODULES_OUT)/compat.ko
-	$(KERNEL_TOOLCHAIN_PATH)strip --strip-debug --strip-unneeded $(KERNEL_MODULES_OUT)/mac80211.ko
-	$(KERNEL_TOOLCHAIN_PATH)strip --strip-debug --strip-unneeded $(KERNEL_MODULES_OUT)/cfg80211.ko
-	$(KERNEL_TOOLCHAIN_PATH)strip --strip-debug --strip-unneeded $(KERNEL_MODULES_OUT)/wl12xx.ko
-	$(KERNEL_TOOLCHAIN_PATH)strip --strip-debug --strip-unneeded $(KERNEL_MODULES_OUT)/wl12xx_sdio.ko
-
-TARGET_KERNEL_MODULES += WLAN_MODULES
-
 # Bluetooth
 BOARD_WPAN_DEVICE := true
 BOARD_HAVE_BLUETOOTH_TI := true

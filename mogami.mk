@@ -32,6 +32,7 @@ PRODUCT_PACKAGES += \
     camera.semc
 
 # WiFi config & related files
+$(call inherit-product, hardware/ti/wlan/mac80211/wl12xx-wlan-modules.mk)
 $(call inherit-product, hardware/ti/wlan/mac80211/wl127x-wlan-products.mk)
 
 PRODUCT_COPY_FILES += \
